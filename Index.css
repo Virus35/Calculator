@@ -46,19 +46,19 @@ table {
 /* My CSS rules */
 body{
     box-sizing: border-box;
-    background-color: #333;
+    background-color: #555;
     color: #FFF;
 	padding: 5px;
 	text-align: center;
-	;
 }
 #UI{
 display: grid;
+font-size: large;
 margin: auto auto;
 grid-template-columns: repeat(4, 75px);
 grid-template-rows: 100px repeat(5, 75px);
 justify-content: center;
-grid-gap: 2px;
+grid-gap: 3px;
 grid-template-areas: 'display display display display'
 					'clear divide multiply erase'
 					'key7 key8 key9 subtract'
@@ -66,65 +66,92 @@ grid-template-areas: 'display display display display'
 					'key1 key2 key3 equal'
 					'key0 key0 decimal equal';
 }
-.calc-btn{
-	background-color: green;
+.calcBtn{
+	background-color: #FFF;
+	color: #000;
 	border-radius: 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: 3px solid black;
 }
-#css-display{
+.calcBtn:active{
+	transform: scale(0.95);
+}
+#cssDisplay{
+	padding: 4px;
+	border: 3px solid black;
 	grid-area: display;
-	background-color: #222;
+	background-color: #FFF;
+	color: #000;
+	display: flex;
+	flex-flow: column nowrap;
+	overflow: hidden;
 }
-#css-key1{
+#cssDisplay > *{
+	border: 1px black solid;
+	flex-grow: 1;
+}
+#cssKey1{
 	grid-area: key1;
 }
-#css-key2{
+#cssKey2{
 	grid-area: key2;
 }
-#css-key3{
+#cssKey3{
 	grid-area: key3;
 }
-#css-key4{
+#cssKey4{
 	grid-area: key4;
 }
-#css-key5{
+#cssKey5{
 	grid-area: key5;
 }
-#css-key6{
+#cssKey6{
 	grid-area: key6;
 }
-#css-key7{
+#cssKey7{
 	grid-area: key7;
 }
-#css-key8{
+#cssKey8{
 	grid-area: key8;
 }
-#css-key9{
+#cssKey9{
 	grid-area: key9;
 }
-#css-key0{
+#cssKey0{
 	grid-area: key0;
 }
-#css-add{
+#cssAdd{
 	grid-area: add;
+	font-size: 1.5em;
 }
-#css-subtract{
+#cssSubtract{
 	grid-area: subtract;
+	font-size: 1.5em;
 }
-#css-divide{
+#cssDivide{
 	grid-area: divide;
+	font-size: 1.5em;
 }
-#css-multiply{
+#cssMultiply{
 	grid-area: multiply;
+	font-size: 1.5em;
 }
-#css-clear{
+#cssClear{
 	grid-area: clear;
+	background-color: orange;
+	color: #FFF;
 }
-#css-erase{
+#cssErase{
 	grid-area: erase;
 }
-#css-equal{
+#cssEqual{
 	grid-area: equal;
+	background-color: orange;
+	color: #FFF;
+	font-size: 1.5em;
 }
-#css-decimal{
+#cssDecimal{
 	grid-area: decimal;
 }
