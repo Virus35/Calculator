@@ -35,33 +35,44 @@ const getNumberFromKey = (key) => {
         break;
         case key0: return 0;
         break;
+        case keydecimal: return '.';
+        break;
     }
 };
 
 // logs all keypresses inside the inputArray and takes action when an operation key is pressed
 const keyPress = (key) => {
-    let keyNumberPressed = getNumberFromKey(key);
-    if(numberCharacters.includes(keyNumberPressed)){
-        tempInputValue.push(keyNumberPressed);
+    if(numericalCharacters.includes(key)){
+        if(key === keydecimal && tempInputValue.includes('.')){
+            return;
+        }
+        tempInputValue.push(getNumberFromKey(key));
     }
-    // else if(operationCharacters.includes(key.textContent)){
-    //     if(tempInputValue.includes('.')){   // Finalizes the value being typed(including decimal) and stores it in inputArray when non-number key is pressed
-    //         inputArray.push(tempInputValue.reduce((acc, cur, curIndex) => {
-    //             if(cur === '.'){
-    //                 return acc;
-    //             }
-    //             else{
-    //                 acc += cur*Math.pow(10, tempInputValue.length-curIndex-2-tempInputValue.indexOf('.'));
-    //                 return acc;
-    //             }
-    //         }, 0));
-    //     }
-    //     else{   // Finalizes the value being typed and stores it in inputArray when non-number key is pressed
-    //         inputArray.push(tempInputValue.reduce((acc, cur, curIndex) => acc += cur*Math.pow(10, tempInputValue.length-curIndex-1), 0));
-    //     }
-    //     console.log(inputArray);
-    //     tempInputValue.splice(0, tempInputValue.length);
-    // }
+    else if(operationCharacters.includes(key)){
+        if(tempInputValue.includes('.')){   // finalizes the value being typed(including decimal) and stores it in inputArray when non-number key is pressed
+            let decimalIndex = tempInputValue.indexOf('.');
+            inputArray.push(tempInputValue.reduce((acc, cur, curIndex) => {
+                if(curIndex < decimalIndex){
+                    acc += cur*Math.pow(10, decimalIndex-curIndex-1);
+                    console.log(acc, decimalIndex-curIndex-1);
+                    return acc;
+                }
+                else if(curIndex === decimalIndex){
+                    return acc;
+                }
+                else{
+                    acc += cur*Math.pow(10, decimalIndex-curIndex);
+                    console.log(acc, decimalIndex-curIndex);
+                    return acc;
+                }
+            }, 0));
+        }
+        else{   // finalizes the value being typed and stores it in inputArray when non-number key is pressed
+            inputArray.push(tempInputValue.reduce((acc, cur, curIndex) => acc += cur*Math.pow(10, tempInputValue.length-curIndex-1), 0));
+        }
+        console.log(inputArray);
+        tempInputValue.splice(0, tempInputValue.length);
+    }
     else if(key === backspacekey){
         tempInputValue.pop();
     }
@@ -83,17 +94,19 @@ const key7 = document.getElementById('cssKey7');
 const key8 = document.getElementById('cssKey8');
 const key9 = document.getElementById('cssKey9');
 const key0 = document.getElementById('cssKey0');
+const keydecimal = document.getElementById('cssDecimal');
 const keyadd = document.getElementById('cssAdd');
 const keysub = document.getElementById('cssSubtract');
 const keymul = document.getElementById('cssMultiply');
 const keydiv = document.getElementById('cssDivide');
+const keyequal = document.getElementById('cssEqual');
 const clearKey = document.getElementById('cssClear');
 const backspacekey = document.getElementById('cssErase');
 const keys = document.querySelectorAll('.calcBtn');
 const displayInput = document.getElementById('cssDisplayInput');
 const displayAnswer = document.getElementById('cssDisplayAnswer');
-let numberCharacters = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
-let operationCharacters = ['+', '-', '*', '÷'];
+let numericalCharacters = [key1, key2, key3, key3, key4, key5, key6, key7, key8, key9, key0, keydecimal];
+let operationCharacters = [keyadd, keysub, keymul, keydiv, keyequal];
 let inputArray = []; // holds all keys pressed
 let tempInputValue = []; // holds all the numbers untill an operation key is pressed and then pushes the final number to inputArray
 window.addEventListener('keydown', (e) => {
