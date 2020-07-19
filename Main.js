@@ -51,7 +51,7 @@ const keyPress = (key) => {
     else if(operationCharacters.includes(key)){
         if(tempInputValue.includes('.')){   // finalizes the value being typed(including decimal) and stores it in inputArray when non-number key is pressed
             let decimalIndex = tempInputValue.indexOf('.');
-            inputArray.push(tempInputValue.reduce((acc, cur, curIndex) => {
+            let floatNumber = tempInputValue.reduce((acc, cur, curIndex) => {
                 if(curIndex < decimalIndex){
                     acc += cur*Math.pow(10, decimalIndex-curIndex-1);
                     console.log(acc, decimalIndex-curIndex-1);
@@ -65,7 +65,8 @@ const keyPress = (key) => {
                     console.log(acc, decimalIndex-curIndex);
                     return acc;
                 }
-            }, 0));
+            }, 0);
+            inputArray.push(floatNumber.toPrecision(tempInputValue.length-1)); // Reduces FLOATING POINT ERROR
         }
         else{   // finalizes the value being typed and stores it in inputArray when non-number key is pressed
             inputArray.push(tempInputValue.reduce((acc, cur, curIndex) => acc += cur*Math.pow(10, tempInputValue.length-curIndex-1), 0));
