@@ -54,7 +54,6 @@ const keyPress = (key) => {
             let floatNumber = tempInputValue.reduce((acc, cur, curIndex) => {
                 if(curIndex < decimalIndex){
                     acc += cur*Math.pow(10, decimalIndex-curIndex-1);
-                    console.log(acc, decimalIndex-curIndex-1);
                     return acc;
                 }
                 else if(curIndex === decimalIndex){
@@ -62,7 +61,6 @@ const keyPress = (key) => {
                 }
                 else{
                     acc += cur*Math.pow(10, decimalIndex-curIndex);
-                    console.log(acc, decimalIndex-curIndex);
                     return acc;
                 }
             }, 0);
