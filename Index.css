@@ -93,9 +93,13 @@ grid-template-areas: 'display display display display'
 	flex-flow: column nowrap;
 	overflow: hidden;
 }
-#cssDisplay > *{
+#cssDisplay *{
 	border: 1px black solid;
 	flex-grow: 1;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: flex-end;
+	align-items: center;
 }
 #cssKey1{
 	grid-area: key1;
@@ -146,15 +150,15 @@ grid-template-areas: 'display display display display'
 #cssClear{
 	grid-area: clear;
 	background-color: orange;
-	color: #FFF;
+	font-size: 1.15em;
 }
 #cssErase{
 	grid-area: erase;
+	background-color: orange;
 }
 #cssEqual{
 	grid-area: equal;
 	background-color: orange;
-	color: #FFF;
 	font-size: 1.5em;
 }
 #cssDecimal{
