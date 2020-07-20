@@ -43,7 +43,7 @@ const getNumberFromKey = (key) => {
 // logs all keypresses inside the inputArray and takes action when an operation key is pressed
 const keyPress = (key) => {
     if(numericalCharacters.includes(key)){
-        if(key === keydecimal && tempInputValue.includes('.')){
+        if(key === keydecimal && tempInputValue.includes('.')){ // makes sure there are no multiple decimal present in the number
             return;
         }
         tempInputValue.push(getNumberFromKey(key));
