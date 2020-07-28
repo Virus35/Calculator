@@ -69,8 +69,19 @@ const keyPress = (key) => {
         else{   // finalizes the value being typed and stores it in inputArray when non-number key is pressed
             inputArray.push(tempInputValue.reduce((acc, cur, curIndex) => acc += cur*Math.pow(10, tempInputValue.length-curIndex-1), 0));
         }
-        console.log(inputArray);
         tempInputValue.splice(0, tempInputValue.length);
+        switch(key){
+            case keyadd: inputArray.push('+');
+            break;
+            case keysub: inputArray.push('-');
+            break;
+            case keymul: inputArray.push('*');
+            break;
+            case keydiv: inputArray.push('/');
+            break;
+            case keyequal: finalize();
+            break;
+        }
     }
     else if(key === backspacekey){
         tempInputValue.pop();
@@ -79,9 +90,22 @@ const keyPress = (key) => {
         tempInputValue.splice(0, tempInputValue.length);
         inputArray.splice(0, inputArray.length);
     }
-    console.log(tempInputValue);
+    displayInput.textContent = inputArray.join(' ');
+    displayAnswer.textContent = tempInputValue.join('');
     key.classList.add('pressed');
 };
+
+// Evaluates the expression inside inputArray and returns it
+const finalize = () => {
+    for(let i = 0; i < BEDMAS.length; i++){
+        for(let j = 0; j < inputArray.length; j++){
+            if(inputArray[j] === BEDMAS[i]){
+                inputArray.splice(j-1, 3, operate(inputArray[j-1], inputArray[j], inputArray[j+1]));
+                console.log(inputArray);
+            }
+        }
+    }
+}
 
 const key1 = document.getElementById('cssKey1');
 const key2 = document.getElementById('cssKey2');
@@ -104,6 +128,7 @@ const backspacekey = document.getElementById('cssErase');
 const keys = document.querySelectorAll('.calcBtn');
 const displayInput = document.getElementById('cssDisplayInput');
 const displayAnswer = document.getElementById('cssDisplayAnswer');
+const BEDMAS = ['/', '*', '+', '-'];
 let numericalCharacters = [key1, key2, key3, key3, key4, key5, key6, key7, key8, key9, key0, keydecimal];
 let operationCharacters = [keyadd, keysub, keymul, keydiv, keyequal];
 let inputArray = []; // holds all keys pressed

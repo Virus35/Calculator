@@ -94,12 +94,12 @@ grid-template-areas: 'display display display display'
 	overflow: hidden;
 }
 #cssDisplay *{
-	border: 1px black solid;
 	flex-grow: 1;
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: flex-end;
 	align-items: center;
+	font-size: 1.1em;
 }
 #cssKey1{
 	grid-area: key1;
