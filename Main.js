@@ -57,7 +57,7 @@ const keyPress = (key) => {
     }
     else if(operationCharacters.includes(key)){
         // Checks if operator keys are pressed back to back
-        if(!['*', '/', '+', '-'].includes(inputArray[inputArray.length-1])) {
+        if(!(['*', '/', '+', '-'].includes(inputArray[inputArray.length-1]) && tempInputValue.length === 0)) {
             // Finalizes the value being typed(including decimal) and stores it in inputArray when non-number key is pressed
             if(tempInputValue.includes('.')){
                 let decimalIndex = tempInputValue.indexOf('.');
@@ -81,11 +81,17 @@ const keyPress = (key) => {
             else{
                 inputArray.push(tempInputValue.reduce((acc, cur, curIndex) => acc += cur*Math.pow(10, tempInputValue.length-curIndex-1), 0));
             }
+            console.log(inputArray);
             tempInputValue.splice(0, tempInputValue.length);
             pushOperatorCharacter(key);
+            console.log(inputArray);
         }
-        inputArray.pop();
-        pushOperatorCharacter(key);
+        else {
+            console.log(inputArray);
+            inputArray.pop();
+            pushOperatorCharacter(key);
+            console.log(inputArray);
+        }
     }
     else if(key === backspacekey){
         tempInputValue.pop();
