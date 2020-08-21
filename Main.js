@@ -81,16 +81,12 @@ const keyPress = (key) => {
             else{
                 inputArray.push(tempInputValue.reduce((acc, cur, curIndex) => acc += cur*Math.pow(10, tempInputValue.length-curIndex-1), 0));
             }
-            console.log(inputArray);
             tempInputValue.splice(0, tempInputValue.length);
             pushOperatorCharacter(key);
-            console.log(inputArray);
         }
         else {
-            console.log(inputArray);
             inputArray.pop();
             pushOperatorCharacter(key);
-            console.log(inputArray);
         }
     }
     else if(key === backspacekey){
