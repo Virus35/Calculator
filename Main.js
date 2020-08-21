@@ -112,9 +112,9 @@ const finalize = () => {
     //     inputArray.splice(0, 3, operate(inputArray[0], inputArray[1], inputArray[2]));
     // }
     // PEMDAS approach
-    PEMDAS.forEach((PEMDASOperator) => {
+    PEMDAS.forEach((PEMDASCurrentSet) => {
         for(let i = 0; i < inputArray.length; i++) {
-            if(inputArray[i] === PEMDASOperator) {
+            if(PEMDASCurrentSet.includes(inputArray[i])) {
                 inputArray.splice(i-1, 3, operate(inputArray[i-1], inputArray[i], inputArray[i+1]));
                 i--;
             }
@@ -146,7 +146,7 @@ const displayInput = document.getElementById('cssDisplayInput');
 const displayAnswer = document.getElementById('cssDisplayAnswer');
 let numericalCharacters = [key1, key2, key3, key3, key4, key5, key6, key7, key8, key9, key0, keydecimal];
 let operationCharacters = [keyadd, keysub, keymul, keydiv, keyequal];
-const PEMDAS = ['*', '/', '+', '-'];
+const PEMDAS = [['*', '/'], ['+', '-']];
 // Holds all keys pressed
 let inputArray = [];
 // Holds all the numbers untill an operation key is pressed and then pushes the final number to inputArray
