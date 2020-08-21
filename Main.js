@@ -56,42 +56,36 @@ const keyPress = (key) => {
         tempInputValue.push(getNumberFromKey(key));
     }
     else if(operationCharacters.includes(key)){
-        // Finalizes the value being typed(including decimal) and stores it in inputArray when non-number key is pressed
-        if(tempInputValue.includes('.')){
-            let decimalIndex = tempInputValue.indexOf('.');
-            let floatNumber = tempInputValue.reduce((acc, cur, curIndex) => {
-                if(curIndex < decimalIndex){
-                    acc += cur*Math.pow(10, decimalIndex-curIndex-1);
-                    return acc;
-                }
-                else if(curIndex === decimalIndex){
-                    return acc;
-                }
-                else{
-                    acc += cur*Math.pow(10, decimalIndex-curIndex);
-                    return acc;
-                }
-            }, 0);
-            // Reduces FLOATING POINT ERROR
-            inputArray.push(Number.parseFloat(floatNumber.toPrecision(tempInputValue.length-1)));
+        // Checks if operator keys are pressed back to back
+        if(!['*', '/', '+', '-'].includes(inputArray[inputArray.length-1])) {
+            // Finalizes the value being typed(including decimal) and stores it in inputArray when non-number key is pressed
+            if(tempInputValue.includes('.')){
+                let decimalIndex = tempInputValue.indexOf('.');
+                let floatNumber = tempInputValue.reduce((acc, cur, curIndex) => {
+                    if(curIndex < decimalIndex){
+                        acc += cur*Math.pow(10, decimalIndex-curIndex-1);
+                        return acc;
+                    }
+                    else if(curIndex === decimalIndex){
+                        return acc;
+                    }
+                    else{
+                        acc += cur*Math.pow(10, decimalIndex-curIndex);
+                        return acc;
+                    }
+                }, 0);
+                // Reduces FLOATING POINT ERROR
+                inputArray.push(Number.parseFloat(floatNumber.toPrecision(tempInputValue.length-1)));
+            }
+            // Finalizes the value being typed and stores it in inputArray when non-number key is pressed
+            else{
+                inputArray.push(tempInputValue.reduce((acc, cur, curIndex) => acc += cur*Math.pow(10, tempInputValue.length-curIndex-1), 0));
+            }
+            tempInputValue.splice(0, tempInputValue.length);
+            pushOperatorCharacter(key);
         }
-        // Finalizes the value being typed and stores it in inputArray when non-number key is pressed
-        else{
-            inputArray.push(tempInputValue.reduce((acc, cur, curIndex) => acc += cur*Math.pow(10, tempInputValue.length-curIndex-1), 0));
-        }
-        tempInputValue.splice(0, tempInputValue.length);
-        switch(key){
-            case keyadd: inputArray.push('+');
-            break;
-            case keysub: inputArray.push('-');
-            break;
-            case keymul: inputArray.push('*');
-            break;
-            case keydiv: inputArray.push('/');
-            break;
-            case keyequal: finalize();
-            break;
-        }
+        inputArray.pop();
+        pushOperatorCharacter(key);
     }
     else if(key === backspacekey){
         tempInputValue.pop();
@@ -103,6 +97,22 @@ const keyPress = (key) => {
     displayInput.textContent = inputArray.join(' ');
     displayAnswer.textContent = tempInputValue.join('');
     key.classList.add('pressed');
+};
+
+// Pushes operators into inputArray according to key element passed through it
+const pushOperatorCharacter = (key) => {
+    switch(key){
+        case keyadd: inputArray.push('+');
+        break;
+        case keysub: inputArray.push('-');
+        break;
+        case keymul: inputArray.push('*');
+        break;
+        case keydiv: inputArray.push('/');
+        break;
+        case keyequal: finalize();
+        break;
+    }
 };
 
 // Evaluates the expression inside inputArray and returns it
